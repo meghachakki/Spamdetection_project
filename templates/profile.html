@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile_styles.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Optional: Mark message as read when clicked using jQuery
+        $('.message-container').click(function() {
+            $(this).addClass('read'); // Apply 'read' class
+            var messageId = $(this).data('message-id'); // Fetch message ID
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'chat:mark_message_read' %}",
+                data: {
+                    'message_id': messageId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    console.log('Message marked as read');
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error marking message as read:', error);
+                }
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <span class="navbar-username">Welcome {{ request.user.username }}</span>
+            </div>
+            <div class="navbar-center">
+                <span id="heading">Chat App</span>
+            </div>
+            <div class="navbar-right">
+                <a style="text-decoration: none;" href="{% url 'chat:logout' %}" class="navbar-logout">Logout</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="main-container">
+        <div class="split left">
+            <div class="split-chat-contact">
+                <h2>Chat Contacts</h2>
+                <ul class="senders-list">
+                    {% for user in chat_users %}
+                        <li>
+                            <a href="?sender_id={{ user.id }}" class="{% if user == selected_sender %}selected{% endif %}">
+                                {{ user.username }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="split-other-contact">
+                <h2>Other Users</h2>
+                <ul class="senders-list">
+                    {% for user in other_users %}
+                        <li>
+                            {{ user.username }}
+                            <form action="" method="get" style="display:inline;">
+                                <input type="hidden" name="sender_id" value="{{ user.id }}">
+                                <button type="submit">Add</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="split right">
+            {% if selected_sender %}
+            <h2><a style="text-decoration: none;color: #007bff;" href="{% url 'chat:user_detail' selected_sender.id %}">{{ selected_sender.username }}</a></h2>
+                <div class="chat">
+                    {% for message in messages_list %}
+                        <div class="message-container {% if message.sender == request.user %}sent{% else %}received{% endif %} {% if message.is_read %}read{% endif %}" data-message-id="{{ message.id }}">
+                            {% if message.sender != request.user %}
+                                <img src="{% static 'images/female_user_image.jpeg' %}" alt="Receiver Avatar">
+                            {% endif %}
+                            <p>{{ message.content }}</p>
+                            <span class="time">
+                                {% if message.sender == request.user %}Sent{% else %}Received{% endif %} - {{ message.created_at|date:"H:i" }}
+                            </span>
+                            {% if message.sender == request.user %}
+                                <img src="{% static 'images/male_user_image.jpeg' %}" alt="Sender Avatar">
+                            {% endif %}
+                            {% if message.receiver == request.user and message.is_spam %}
+                                <span class="spam-label">SPAM</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <form method="post" action="" class="message-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="receiver" value="{{ selected_sender.id }}">
+                    <div class="form-group">
+                        {{ form.content.label_tag }}
+                        {{ form.content }}
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            {% else %}
+                <p>Select a sender to view messages and send a message.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

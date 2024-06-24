@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Welcome to Chat App{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chat App</h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'chat:index' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'chat:logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'chat:login' %}">Login</a></li>
+                        <li><a href="{% url 'chat:signup' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            {% block content %}
+            <!-- Content from child templates will be rendered here -->
+            {% endblock %}
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 Chat App. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,227 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.header{
+    width:100%;
+}
+.navbar {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    font-family:fantasy;
+}
+#heading{
+    color: #f1f1f1;
+    font-size: xx-large;
+    font-family:fantasy;
+}
+.navbar-left{
+    font-size: larger;
+}
+
+.navbar-right a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-family:fantasy;
+}
+
+.navbar-right a:hover {
+    text-decoration: underline;
+}
+
+.main-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #007bff;
+    font-family:fantasy;
+}
+
+.split {
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-family:fantasy;
+}
+
+.split.left, .split.right {
+    flex: 1;
+    margin: 10px;
+    font-family:fantasy;
+}
+
+.split.left {
+    max-width: 300px;
+}
+
+.split.right {
+    flex: 2;
+}
+.split-chat-contact,.split-other-contact{
+    height: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-family:fantasy;
+}
+.split.left h2, .split.right h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.chat {
+    height: 15em;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+.senders-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.senders-list li {
+    margin-bottom: 10px;
+}
+
+.senders-list a {
+    text-decoration: none;
+    color: #555;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.senders-list a:hover {
+    color: #007bff;
+}
+
+.senders-list a.selected {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.message-container {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.sent {
+    border-color: #d0ff00;
+}
+
+.received {
+    border-color: #28a745;
+}
+
+.message-container img {
+    float: left;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.message-container p {
+    margin: 0;
+    max-width: calc(100% - 80px); /* Ensure message content does not overflow */
+}
+
+.message-container .time {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 12px;
+    color: #999;
+}
+
+.spam-label {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 12px;
+    color: red;
+    background-color: #ffcdd2;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+.message-form {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.message-form .form-group {
+    margin-bottom: 15px;
+}
+
+.message-form input[type="text"],
+.message-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.message-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.message-form button:hover {
+    background-color: #0056b3;
+}
+
+/* New styles for the Add button */
+.senders-list li form button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    float:right;
+}
